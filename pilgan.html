@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css">
   <title>Ujian Sederhana</title>
+  <style>
+    
+  </style>
 </head>
-
 <body>
   <form id="quizForm">
     <label for="nama">Nama:</label><br />
@@ -21,39 +22,26 @@
     <button type="submit">Kirim</button>
   </form>
 
+  <div id="hasilContainer"></div>
+
   <script>
     const soalList = [
       {
         id: "soal1",
         pertanyaan: "Ibukota Indonesia adalah?",
-        pilihan: {
-          A: "Bandung",
-          B: "Surabaya",
-          C: "Jakarta",
-          D: "Medan"
-        },
+        pilihan: { A: "Bandung", B: "Surabaya", C: "Jakarta", D: "Medan" },
         kunci: "C"
       },
       {
         id: "soal2",
         pertanyaan: "2 + 2 = ?",
-        pilihan: {
-          A: "3",
-          B: "4",
-          C: "5",
-          D: "22"
-        },
+        pilihan: { A: "3", B: "4", C: "5", D: "22" },
         kunci: "B"
       },
       {
         id: "soal3",
         pertanyaan: "4 + 4 = ?",
-        pilihan: {
-          A: "8",
-          B: "4",
-          C: "5",
-          D: "22"
-        },
+        pilihan: { A: "8", B: "4", C: "5", D: "22" },
         kunci: "A"
       }
     ];
@@ -121,21 +109,46 @@
           if (benar) totalSkor += skorPerSoal;
 
           hasil.push({
-            Soal: soal.id,
-            "Jawaban Kamu": jawabanUser,
+            Soal: soal.pertanyaan,
+            "Jawaban Kamu": `${jawabanUser}. ${soal.pilihan[jawabanUser]}`,
             Status: benar ? "Benar" : "Salah",
-            Poin: benar ? skorPerSoal.toFixed(2) : 0
+            Poin: benar ? skorPerSoal.toFixed(2) : 0,
+            Benar: benar
           });
         }
 
-        const isJumlahSoalGanjil = totalSoal % 2 !== 0;
+        this.tampilkanHasil(nama, kelas, totalSkor, hasil);
+      }
 
-        console.log(`Nama: ${nama}, Kelas: ${kelas}`);
-        console.table(hasil);
-        console.log(`Skor Akhir: ${totalSkor.toFixed(2)} / 100`);
-        if (isJumlahSoalGanjil) {
-          console.warn("Jumlah soal adalah ganjil!");
-        }
+      tampilkanHasil(nama, kelas, skor, hasil) {
+        const container = document.getElementById("hasilContainer");
+
+        let html = `<h2>Hasil Ujian</h2>
+        <p><strong>Nama:</strong> ${nama}</p>
+        <p><strong>Kelas:</strong> ${kelas}</p>
+        <p><strong>Skor Akhir:</strong> ${skor.toFixed(2)} / 100</p>
+        <table>
+          <tr>
+            <th>No</th>
+            <th>Soal</th>
+            <th>Jawaban Kamu</th>
+            <th>Status</th>
+            <th>Poin</th>
+          </tr>`;
+
+        hasil.forEach((row, i) => {
+          html += `<tr class="${row.Benar ? 'benar' : 'salah'}">
+            <td>${i + 1}</td>
+            <td>${row.Soal}</td>
+            <td>${row["Jawaban Kamu"]}</td>
+            <td>${row.Status}</td>
+            <td>${row.Poin}</td>
+          </tr>`;
+        });
+
+        html += `</table>`;
+
+        container.innerHTML = html;
       }
     }
 
@@ -144,5 +157,4 @@
     });
   </script>
 </body>
-
 </html>

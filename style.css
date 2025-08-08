@@ -52,3 +52,22 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #0056b3;
 }
+
+table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    .benar { background-color: #c8e6c9; }
+    .salah { background-color: #ffcdd2; }
+    #hasilContainer {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      background: #f9f9f9;
+}
