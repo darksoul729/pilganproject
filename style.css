@@ -39,7 +39,6 @@ input[type="text"]:focus {
   outline: none;
 }
 
-/* Tombol submit */
 button[type="submit"] {
   padding: 10px 20px;
   background-color: #007bff;
